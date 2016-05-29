@@ -2,41 +2,64 @@
 
 \usepackage{lipsum}
 \usepackage{filecontents}
+\usepackage{endnotes}
+\usepackage[citestyle=verbose-note,notetype=endonly,singletitle=false,backend=bibtex]{biblatex}
+  \bibliography{\jobname}
 
 \begin{filecontents}{\jobname.bib}
-@misc
-{
-  death-star,
-  author       = {Bevel Lemelisk and Wilhuff Tarkin and Darth Vader and Darth Sidious},
-  title        = {{Death Star}},
-  howpublished = {Alderaan and Yavin 4},
-  year         = {0 BBY}
-}
-@misc
-{
-  death-star-2,
-  author       = {Bevel Lemelisk and Wilhuff Tarkin and Darth Vader and Darth Sidious},
-  title        = {{Death Star II}},
-  howpublished = {Endor},
-  year         = {4 ABY}
-}
+  @misc
+  {
+    death-star,
+    author       = {Bevel Lemelisk and Wilhuff Tarkin and Darth Vader and Darth Sidious},
+    title        = {{Death Star}},
+    howpublished = {Alderaan and Yavin 4},
+    year         = {0 BBY}
+  }
+  @misc
+  {
+    death-star-2,
+    author       = {Bevel Lemelisk and Wilhuff Tarkin and Darth Vader and Darth Sidious},
+    title        = {{Death Star II}},
+    howpublished = {Endor},
+    year         = {4 ABY}
+  }
 \end{filecontents}
+
+\def\enotesize{\normalsize}
+\renewcommand{\notesname}{References}
+\renewcommand{\makeenmark}{\mkbibbrackets{\theenmark}}
+
+\makeatletter
+\renewbibmacro*{footcite:note}{% adapted from verbose-note.cbx
+  \ifnameundef{labelname}
+  {\printfield{label}}{}%
+  \setunit*{\addspace}%
+  \printtext{%
+    \mkbibbrackets{%
+      \ref{cbx@\csuse{cbx@f@\thefield{entrykey}}}}%
+    \iftoggle{cbx:pageref}
+    {\ifsamepage{\the\value{instcount}}
+      {\csuse{cbx@f@\thefield{entrykey}}}
+      {}
+      {\addcomma\space\bibstring{page}\addnbspace
+        \pageref{cbx@\csuse{cbx@f@\thefield{entrykey}}}}}
+    {}}}
+\makeatother
 
 \begin{document}
 
-They first built \emph{Death Star}~\cite{death-star}.
+  They first built \emph{Death Star}~\autocite{death-star}.
 
-\lipsum[1]
+  \lipsum[1]
 
-The design flaw was found in \cite[Lemelisk et al., Chapter 3, p. 123]{death-star}.
+  The design flaw was found in \autocite[Lemelisk et al., Chapter 3, p. 123][]{death-star}.
 
-\lipsum[2]
+  \lipsum[2]
 
-To address the flaw, they designed \emph{Death Star 2}~\cite{death-star-2}
-that featured many smaller diameter heat exhaust vents.
+  To address the flaw, they designed \emph{Death Star 2}~\autocite{death-star-2}
+  that featured many smaller diameter heat exhaust vents.
 
-\bibliographystyle{abbrv}
-\bibliography{\jobname}
+  \renewcommand{\makeenmark}{\mkbibbrackets{\theenmark}\addspace}
+  \theendnotes
 
 \end{document}
-
