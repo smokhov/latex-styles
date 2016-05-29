@@ -1,0 +1,42 @@
+\documentclass{article}
+
+\usepackage{lipsum}
+\usepackage{filecontents}
+
+\begin{filecontents}{\jobname.bib}
+@misc
+{
+  death-star,
+  author       = {Bevel Lemelisk and Wilhuff Tarkin and Darth Vader and Darth Sidious},
+  title        = {{Death Star}},
+  howpublished = {Alderaan and Yavin 4},
+  year         = {0 BBY}
+}
+@misc
+{
+  death-star-2,
+  author       = {Bevel Lemelisk and Wilhuff Tarkin and Darth Vader and Darth Sidious},
+  title        = {{Death Star II}},
+  howpublished = {Endor},
+  year         = {4 ABY}
+}
+\end{filecontents}
+
+\begin{document}
+
+They first built \emph{Death Star}~\cite{death-star}.
+
+\lipsum[1]
+
+The design flaw was found in \cite[Lemelisk et al., Chapter 3, p. 123]{death-star}.
+
+\lipsum[2]
+
+To address the flaw, they designed \emph{Death Star 2}~\cite{death-star-2}
+that featured many smaller diameter heat exhaust vents.
+
+\bibliographystyle{abbrv}
+\bibliography{\jobname}
+
+\end{document}
+
