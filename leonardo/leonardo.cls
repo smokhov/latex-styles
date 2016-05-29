@@ -783,6 +783,10 @@
 %\let\footnote=\bibnote
 %
 
+\def\enotesize{\normalsize}
+\renewcommand{\notesname}{References}
+\renewcommand{\makeenmark}{\mkbibbrackets{\theenmark}}
+
 %Type subheads, titles and the like as isolated paragraphs.
 %
 % No-op?
